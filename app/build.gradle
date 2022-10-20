@@ -1,6 +1,7 @@
 plugins {
     alias deps.plugins.androidApplication
     alias deps.plugins.kotlin
+    alias deps.plugins.navigation apply false
 }
 
 android {
@@ -57,12 +58,17 @@ dependencies {
     implementation deps.activity
     implementation deps.fragment
     implementation deps.bundles.lifecycle
+    implementation deps.bundles.navigation
     // Kotlin
     implementation deps.core
     // Timber
     implementation deps.timber
     // Network
     implementation deps.bundles.retrofitGson
+    // DI
+    implementation deps.koin
+    // ImageLoader
+    implementation deps.coil
     // Test
     testImplementation deps.junit4
     androidTestImplementation deps.extJunit
