@@ -16,6 +16,7 @@ android {
         versionCode deps.versions.debugVersionCode.get() as Integer
         versionName deps.versions.debugVersionName.get()
 
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.jsonserve.com/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +32,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -45,6 +47,8 @@ android {
 }
 
 dependencies {
+    // Desugar
+    coreLibraryDesugaring deps.desugar
     // Android
     implementation deps.appcompat
     implementation deps.material
@@ -55,6 +59,10 @@ dependencies {
     implementation deps.bundles.lifecycle
     // Kotlin
     implementation deps.core
+    // Timber
+    implementation deps.timber
+    // Network
+    implementation deps.bundles.retrofitGson
     // Test
     testImplementation deps.junit4
     androidTestImplementation deps.extJunit

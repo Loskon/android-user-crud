@@ -1,7 +1,8 @@
-package com.loskon.usercrud
+package com.loskon.usercrud.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.loskon.usercrud.R
 
 class MainActivity : AppCompatActivity() {
 
