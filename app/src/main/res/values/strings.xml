@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">UserCrud</string>
+    <string name="app_name">User Crud</string>
+    <string name="telros">Телрос</string>
+    <string name="login_hint">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Войти</string>
+    <string name="forgot_password">Забыли логин или пароль?</string>
+    <string name="enter_login_error">Введите логин</string>
+    <string name="enter_password_error">Введите пароль</string>
+    <string name="invalid_login_password_error">Неверный логин или пароль</string>
+    <string name="ss">Логин: admin \nПароль: admin</string>
 </resources>
