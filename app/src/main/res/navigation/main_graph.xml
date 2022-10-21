@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_graph.xml"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/main_graph"
+    app:startDestination="@id/userListFragment">
+
+    <action
+        android:id="@+id/actionOpenLoginFragment"
+        app:popUpTo="@+id/userListFragment"
+        app:destination="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/actionOpenUserListFragment"
+        app:popUpTo="@+id/loginFragment"
+        app:destination="@id/userListFragment"
+        app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.loskon.usercrud.app.login.LoginFragment"
         android:label="LoginFragment" />
+
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="com.loskon.usercrud.app.userlist.presentation.UserListFragment"
+        android:label="UserListFragment" />
 
 </navigation>

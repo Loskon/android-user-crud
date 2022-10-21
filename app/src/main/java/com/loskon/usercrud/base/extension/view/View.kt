@@ -1,4 +1,4 @@
-package com.loskon.usercrud.base.extension
+package com.loskon.usercrud.base.extension.view
 
 import android.os.SystemClock
 import android.view.View

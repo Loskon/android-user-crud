@@ -11,15 +11,15 @@ import retrofit2.http.Path
 
 interface UserApi {
 
-    @GET("4x_ohr") fun getFakeUsers(): Response<List<UserDto>>
+    @GET("JWvp7c") suspend fun getFakeUsers(): Response<List<UserDto>>
 
-    @GET("users") fun getUsers(): Response<List<UserDto>>
+    @GET("users") suspend fun getUsers(): Response<List<UserDto>>
 
-    @GET("users/{id}") fun getUser(@Path("id") id: Int): Response<UserDto>
+    @GET("users/{id}") suspend fun getUser(@Path("id") id: Int): Response<UserDto>
 
-    @POST("add") fun addUser(@Body user: UserDto?): Response<UserDto>
+    @POST("add") suspend fun addUser(@Body user: UserDto?): Response<UserDto>
 
-    @PUT("update/{id}") fun updateUser(@Path("id") id: Int, @Body user: UserDto): Response<UserDto>
+    @PUT("update/{id}") suspend fun updateUser(@Path("id") id: Int, @Body user: UserDto): Response<UserDto>
 
-    @DELETE("delete/{id}") fun deleteUser(@Path("id") id: Int): Response<UserDto>
+    @DELETE("delete/{id}") suspend fun deleteUser(@Path("id") id: Int): Response<UserDto>
 }

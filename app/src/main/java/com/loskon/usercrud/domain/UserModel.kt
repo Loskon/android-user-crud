@@ -1,6 +1,5 @@
 package com.loskon.usercrud.domain
 
-import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 
 data class UserModel(
@@ -12,4 +11,6 @@ data class UserModel(
     val email: String = "",
     val phone: String = "",
     val photoUrl: String = ""
-)
+) {
+    val fullName: String get() = "$lastName $firstName $middleName"
+}

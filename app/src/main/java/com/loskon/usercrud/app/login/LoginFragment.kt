@@ -5,11 +5,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.loskon.usercrud.R
-import com.loskon.usercrud.base.extension.setDebounceClickListener
-import com.loskon.usercrud.base.extension.setDisabledSpaceFilter
+import com.loskon.usercrud.base.extension.view.setDebounceClickListener
+import com.loskon.usercrud.base.extension.view.setDisabledSpaceFilter
 import com.loskon.usercrud.base.viewbinding.viewBinding
 import com.loskon.usercrud.databinding.FragmentLoginBinding
+import com.loskon.usercrud.util.AppPreference
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -50,7 +52,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun checkLoginData(login: String, password: String) {
         if (login == LOGIN && password == PASSWORD) {
-            // AppPreference.setLoggedUser(requireContext(), logged = true)
+            AppPreference.setUserAuthenticated(requireContext(), authenticated = true)
+            findNavController().navigate(R.id.actionOpenUserListFragment)
         } else {
             binding.inputLayoutLogin.error = getString(R.string.invalid_login_password_error)
             binding.inputLayoutPassword.error = getString(R.string.invalid_login_password_error)

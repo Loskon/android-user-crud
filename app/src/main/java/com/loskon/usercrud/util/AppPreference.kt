@@ -16,11 +16,11 @@ object AppPreference {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, default)
     }
 
-    fun setLoggedUser(context: Context, logged: Boolean) {
-        set(context, PREF_KEY_LOGIN, logged)
+    fun setUserAuthenticated(context: Context, authenticated: Boolean) {
+        set(context, PREF_KEY_LOGIN, authenticated)
     }
 
-    fun getLoggedUser(context: Context): Boolean {
+    fun isUserAuthenticated(context: Context): Boolean {
         return get(context, PREF_KEY_LOGIN)
     }
 }

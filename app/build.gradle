@@ -58,6 +58,7 @@ dependencies {
     implementation deps.activity
     implementation deps.fragment
     implementation deps.preference
+    implementation deps.swiperefreshlayout
     implementation deps.bundles.lifecycle
     implementation deps.bundles.navigation
     // Kotlin
