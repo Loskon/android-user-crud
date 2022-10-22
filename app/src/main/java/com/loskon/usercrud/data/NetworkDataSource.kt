@@ -23,7 +23,7 @@ class NetworkDataSource(
 
     suspend fun getUserAsFlow(id: Int): Flow<UserDto> {
         return flow {
-            val response = userApi.getUser(id)
+            val response = userApi.getFakeUser()
 
             if (response.isSuccessful) {
                 emit(response.body() ?: UserDto())

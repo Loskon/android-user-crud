@@ -2,6 +2,7 @@ package com.loskon.usercrud.app
 
 import android.app.Application
 import com.loskon.usercrud.BuildConfig
+import com.loskon.usercrud.app.userinfo.userInfoModule
 import com.loskon.usercrud.app.userlist.userListModule
 import com.loskon.usercrud.data.networkModule
 import org.koin.android.ext.koin.androidContext
@@ -19,7 +20,7 @@ class App : Application() {
     private fun initializeKoin(application: Application) {
         startKoin {
             androidContext(application)
-            modules(listOf(networkModule, userListModule))
+            modules(listOf(networkModule, userListModule, userInfoModule))
         }
     }
 }

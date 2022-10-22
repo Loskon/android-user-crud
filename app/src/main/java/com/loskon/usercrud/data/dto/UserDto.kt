@@ -2,14 +2,13 @@ package com.loskon.usercrud.data.dto
 
 import com.google.gson.annotations.SerializedName
 import com.loskon.usercrud.domain.UserModel
-import java.time.LocalDateTime
 
 data class UserDto(
     @SerializedName("id") val id: Int? = null,
     @SerializedName("lastName") val lastName: String? = null,
     @SerializedName("firstName") val firstName: String? = null,
     @SerializedName("middleName") val middleName: String? = null,
-    @SerializedName("birthDate") val birthDate: LocalDateTime? = null,
+    @SerializedName("birthDate") val birthDate: String? = null,
     @SerializedName("email") val email: String? = null,
     @SerializedName("phone") val phone: String? = null,
     @SerializedName("photoUrl") val photoUrl: String? = null
@@ -21,7 +20,7 @@ fun UserDto.toUserModel(): UserModel {
         lastName = lastName ?: "",
         firstName = firstName ?: "",
         middleName = middleName ?: "",
-        birthDate = birthDate ?: LocalDateTime.now(),
+        birthDate = birthDate ?: "",
         email = email ?: "",
         phone = phone ?: "",
         photoUrl = photoUrl ?: ""

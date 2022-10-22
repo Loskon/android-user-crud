@@ -24,6 +24,19 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.loskon.usercrud.app.userlist.presentation.UserListFragment"
-        android:label="UserListFragment" />
+        android:label="UserListFragment" >
+        <action
+            android:id="@+id/actionOpenUserInfoFragment"
+            app:destination="@id/userInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.loskon.usercrud.app.userinfo.presentation.UserInfoFragment"
+        android:label="UserInfoFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

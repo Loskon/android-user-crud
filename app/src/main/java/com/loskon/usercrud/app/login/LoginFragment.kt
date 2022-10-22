@@ -7,6 +7,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.loskon.usercrud.R
+import com.loskon.usercrud.base.extension.fragment.hideKeyboard
 import com.loskon.usercrud.base.extension.view.setDebounceClickListener
 import com.loskon.usercrud.base.extension.view.setDisabledSpaceFilter
 import com.loskon.usercrud.base.viewbinding.viewBinding
@@ -46,7 +47,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (login.isNotEmpty() && password.isNotEmpty()) checkLoginData(login, password)
         }
         binding.btnForgot.setDebounceClickListener {
-            Toast.makeText(requireContext(), getString(R.string.ss), Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.login_password), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -58,6 +59,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.inputLayoutLogin.error = getString(R.string.invalid_login_password_error)
             binding.inputLayoutPassword.error = getString(R.string.invalid_login_password_error)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard()
     }
 
     companion object {

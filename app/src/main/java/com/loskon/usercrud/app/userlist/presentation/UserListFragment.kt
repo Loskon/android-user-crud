@@ -46,7 +46,7 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     }
 
     private fun installObserver() {
-        viewModel.userListStateFlow.observe(viewLifecycleOwner) {
+        viewModel.userListFlow.observe(viewLifecycleOwner) {
             when (it) {
                 is UserListState.Loading -> {
                     binding.indicator.isVisible = true
@@ -68,10 +68,12 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
             viewModel.performUsersRequest()
         }
         userListAdapter.setOnItemClickListener {
-
+            val action = UserListFragmentDirections.actionOpenUserInfoFragment(1)
+            findNavController().navigate(action)
         }
         binding.fab.setDebounceClickListener {
-
+            val action = UserListFragmentDirections.actionOpenUserInfoFragment(0)
+            findNavController().navigate(action)
         }
         binding.bottomBar.setNavigationOnClickListener {
             AppPreference.setUserAuthenticated(requireContext(), authenticated = false)

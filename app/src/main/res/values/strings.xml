@@ -8,5 +8,15 @@
     <string name="enter_login_error">Введите логин</string>
     <string name="enter_password_error">Введите пароль</string>
     <string name="invalid_login_password_error">Неверный логин или пароль</string>
-    <string name="ss">Логин: admin \nПароль: admin</string>
+    <string name="login_password">Логин: admin \nПароль: admin</string>
+    <string name="enter_data_error">Введите данные</string>
+    <string name="last_name">Фамилия</string>
+    <string name="first_name">Имя</string>
+    <string name="middle_name">Отчество</string>
+    <string name="birth_date">Дата рождения</string>
+    <string name="phone">Номер телефона</string>
+    <string name="email">Электронная почта</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="add_user">Добавить пользователя</string>
+    <string name="menu_title_delete">Удалить профиль</string>
 </resources>

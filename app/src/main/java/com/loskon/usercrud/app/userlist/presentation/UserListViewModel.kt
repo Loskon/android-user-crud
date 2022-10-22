@@ -14,8 +14,8 @@ class UserListViewModel(
     private val userListInteractor: UserListInteractor
 ): BaseViewModel() {
 
-    private val userListMutableStateFlow = MutableStateFlow<UserListState>(UserListState.Loading)
-    val userListStateFlow get() = userListMutableStateFlow.asStateFlow()
+    private val userListMutableFlow = MutableStateFlow<UserListState>(UserListState.Loading)
+    val userListFlow get() = userListMutableFlow.asStateFlow()
 
     private var job: Job? = null
 
@@ -24,14 +24,14 @@ class UserListViewModel(
         job = launchIOJob() {
             userListInteractor.getUsersAsFlow()
                 .onStart {
-                    userListMutableStateFlow.emit(UserListState.Loading)
+                    userListMutableFlow.emit(UserListState.Loading)
                 }
                 .catch {
                     Timber.d(it)
-                    userListMutableStateFlow.emit(UserListState.Failure)
+                    userListMutableFlow.emit(UserListState.Failure)
                 }
                 .collectLatest {
-                    userListMutableStateFlow.emit(UserListState.Success(it))
+                    userListMutableFlow.emit(UserListState.Success(it))
                 }
         }
     }

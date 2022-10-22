@@ -1,7 +1,7 @@
 plugins {
     alias deps.plugins.androidApplication
     alias deps.plugins.kotlin
-    alias deps.plugins.navigation apply false
+    alias deps.plugins.navigation
 }
 
 android {

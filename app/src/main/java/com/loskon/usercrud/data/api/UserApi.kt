@@ -13,6 +13,8 @@ interface UserApi {
 
     @GET("JWvp7c") suspend fun getFakeUsers(): Response<List<UserDto>>
 
+    @GET("wM3aK2") suspend fun getFakeUser(): Response<UserDto>
+
     @GET("users") suspend fun getUsers(): Response<List<UserDto>>
 
     @GET("users/{id}") suspend fun getUser(@Path("id") id: Int): Response<UserDto>
