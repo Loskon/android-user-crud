@@ -14,24 +14,28 @@ class UserListViewModel(
     private val userListInteractor: UserListInteractor
 ): BaseViewModel() {
 
-    private val userListMutableFlow = MutableStateFlow<UserListState>(UserListState.Loading)
+    private val userListMutableFlow = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val userListFlow get() = userListMutableFlow.asStateFlow()
 
     private var job: Job? = null
+
+    fun notifyNoInternet() {
+        userListMutableFlow.tryEmit(UserListUiState.NoInternet)
+    }
 
     fun performUsersRequest() {
         job?.cancel()
         job = launchIOJob() {
             userListInteractor.getUsersAsFlow()
                 .onStart {
-                    userListMutableFlow.emit(UserListState.Loading)
+                    userListMutableFlow.emit(UserListUiState.Loading)
                 }
                 .catch {
                     Timber.d(it)
-                    userListMutableFlow.emit(UserListState.Failure)
+                    userListMutableFlow.emit(UserListUiState.Failure)
                 }
                 .collectLatest {
-                    userListMutableFlow.emit(UserListState.Success(it))
+                    userListMutableFlow.emit(UserListUiState.Success(it))
                 }
         }
     }

@@ -15,44 +15,54 @@ class UserInfoViewModel(
     private val userInfoInteractor: UserInfoInteractor
 ) : BaseViewModel() {
 
-    private val userInfoMutableFlow = MutableStateFlow<UserInfoState>(UserInfoState.Loading)
+    private val userInfoMutableFlow = MutableStateFlow<UserInfoUiState>(UserInfoUiState.Loading)
     private val userMutableFlow = MutableStateFlow(UserModel())
     val userInfoFlow get() = userInfoMutableFlow.asStateFlow()
     val userFlow get() = userMutableFlow.asStateFlow()
 
     private var job: Job? = null
 
-    fun performAddUser() {
-        userInfoMutableFlow.tryEmit(UserInfoState.AddUser)
+    fun prepareAddUser() {
+        userInfoMutableFlow.tryEmit(UserInfoUiState.AddUser)
+    }
+
+    fun notifyNoInternet() {
+        userInfoMutableFlow.tryEmit(UserInfoUiState.NoInternet)
     }
 
     fun performUserRequest(id: Int) {
         job?.cancel()
-        job = launchIOJob() {
+        job = launchIOJob {
             userInfoInteractor.getUserAsFlow(id)
                 .onStart {
-                    userInfoMutableFlow.emit(UserInfoState.Loading)
+                    userInfoMutableFlow.emit(UserInfoUiState.Loading)
                 }
                 .catch {
                     Timber.e(it)
-                    userInfoMutableFlow.emit(UserInfoState.Error)
+                    userInfoMutableFlow.emit(UserInfoUiState.Error)
                 }
                 .collectLatest {
                     userMutableFlow.emit(it)
-                    userInfoMutableFlow.emit(UserInfoState.Success(it))
+                    userInfoMutableFlow.emit(UserInfoUiState.Success(it))
                 }
         }
     }
 
     fun addUser(user: UserModel) {
-        TODO("Not yet implemented")
+        launchIOJob {
+            userInfoInteractor.addUser(user)
+        }
     }
 
-    fun updateUser(user: UserModel) {
-        TODO("Not yet implemented")
+    fun updateUser(id: Int, user: UserModel) {
+        launchIOJob {
+            userInfoInteractor.updateUser(id, user)
+        }
     }
 
-    fun deleteUser(user: UserModel) {
-        TODO("Not yet implemented")
+    fun deleteUser(id: Int) {
+        launchIOJob {
+            userInfoInteractor.deleteUser(id)
+        }
     }
 }

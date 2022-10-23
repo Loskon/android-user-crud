@@ -23,18 +23,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="72dp"
+            android:paddingBottom="80dp"
             tools:listitem="@layout/item_user" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomBar"
-        app:srcCompat="@drawable/ic_add_24_px"
-        app:tint="@android:color/white"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:text="@string/new_user" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomBar"
@@ -44,6 +45,25 @@
         app:backgroundTint="@android:color/white"
         app:fabAlignmentMode="end"
         app:navigationIcon="@drawable/ic_logout_24_px"
-        app:navigationIconTint="@color/green" />
+        app:navigationIconTint="@color/green">
+
+        <TextView
+            android:id="@+id/tv_no_internet_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_rounded"
+            android:gravity="center"
+            android:paddingStart="@dimen/margin_xmedium"
+            android:paddingTop="@dimen/margin_tiny"
+            android:paddingEnd="@dimen/margin_xmedium"
+            android:paddingBottom="@dimen/margin_tiny"
+            android:text="@string/no_internet_error"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:ignore="TextContrastCheck"
+            tools:visibility="visible" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

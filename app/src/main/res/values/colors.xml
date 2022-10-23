@@ -10,4 +10,6 @@
 
     <color name="green">#006437</color>
     <color name="light_green">#d2ddd8</color>
+    <color name="error_color">#B00020</color>
+    <color name="accent_grey">#E8ECF1</color>
 </resources>

@@ -204,6 +204,25 @@
         app:menu="@menu/menu_user_info"
         app:navigationIcon="@drawable/ic_navigate_before_24_px"
         app:navigationIconTint="@color/green"
-        tools:ignore="BottomAppBar" />
+        tools:ignore="BottomAppBar">
+
+        <TextView
+            android:id="@+id/tv_no_internet_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_rounded"
+            android:gravity="center"
+            android:paddingStart="@dimen/margin_xmedium"
+            android:paddingTop="@dimen/margin_tiny"
+            android:paddingEnd="@dimen/margin_xmedium"
+            android:paddingBottom="@dimen/margin_tiny"
+            android:text="@string/no_internet_error"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:ignore="TextContrastCheck"
+            tools:visibility="visible" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,3 +26,16 @@ fun UserDto.toUserModel(): UserModel {
         photoUrl = photoUrl ?: ""
     )
 }
+
+fun UserModel.toUserDto(): UserDto {
+    return UserDto(
+        id = id,
+        lastName = lastName,
+        firstName = firstName,
+        middleName = middleName,
+        birthDate = birthDate,
+        email = email,
+        phone = phone,
+        photoUrl = photoUrl
+    )
+}

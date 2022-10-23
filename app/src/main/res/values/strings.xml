@@ -9,6 +9,7 @@
     <string name="enter_password_error">Введите пароль</string>
     <string name="invalid_login_password_error">Неверный логин или пароль</string>
     <string name="login_password">Логин: admin \nПароль: admin</string>
+    <string name="new_user">Новый пользователь</string>
     <string name="enter_data_error">Введите данные</string>
     <string name="last_name">Фамилия</string>
     <string name="first_name">Имя</string>
@@ -18,5 +19,8 @@
     <string name="email">Электронная почта</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="add_user">Добавить пользователя</string>
-    <string name="menu_title_delete">Удалить профиль</string>
+    <string name="menu_title_delete">Удалить пользователя</string>
+    <string name="fill_all_fields_error">Необходимо заполнить все поля</string>
+    <string name="loading_error">Произошла ошибка при загрузке</string>
+    <string name="no_internet_error">Отсутствует интернет-соединение</string>
 </resources>

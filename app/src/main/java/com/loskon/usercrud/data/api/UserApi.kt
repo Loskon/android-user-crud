@@ -19,7 +19,7 @@ interface UserApi {
 
     @GET("users/{id}") suspend fun getUser(@Path("id") id: Int): Response<UserDto>
 
-    @POST("add") suspend fun addUser(@Body user: UserDto?): Response<UserDto>
+    @POST("add") suspend fun addUser(@Body user: UserDto): Response<UserDto>
 
     @PUT("update/{id}") suspend fun updateUser(@Path("id") id: Int, @Body user: UserDto): Response<UserDto>
 

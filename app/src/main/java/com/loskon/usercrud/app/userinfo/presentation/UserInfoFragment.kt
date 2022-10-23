@@ -6,15 +6,19 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.textfield.TextInputEditText
 import com.loskon.usercrud.R
 import com.loskon.usercrud.base.extension.coroutines.observe
 import com.loskon.usercrud.base.extension.fragment.hideKeyboard
 import com.loskon.usercrud.base.extension.view.setDebounceClickListener
 import com.loskon.usercrud.base.extension.view.setDebounceMenuItemClickListener
 import com.loskon.usercrud.base.extension.view.setMenuItemVisibility
+import com.loskon.usercrud.base.extension.widget.BaseSnackbar
 import com.loskon.usercrud.base.viewbinding.viewBinding
 import com.loskon.usercrud.databinding.FragmentUserInfoBinding
+import com.loskon.usercrud.domain.UserModel
 import com.loskon.usercrud.util.ImageLoader
+import com.loskon.usercrud.util.NetworkUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
@@ -27,10 +31,14 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            if (args.id == NEW_USER_ID) {
-                viewModel.performAddUser()
+            if (NetworkUtil.hasConnected(requireContext())) {
+                if (args.id == NEW_USER_ID) {
+                    viewModel.prepareAddUser()
+                } else {
+                    viewModel.performUserRequest(args.id)
+                }
             } else {
-                viewModel.performUserRequest(args.id)
+                viewModel.notifyNoInternet()
             }
         }
     }
@@ -45,12 +53,13 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
     private fun installObserver() {
         viewModel.userInfoFlow.observe(viewLifecycleOwner) {
             when (it) {
-                is UserInfoState.Loading -> {
+                is UserInfoUiState.Loading -> {
                     binding.indicatorInfo.isVisible = true
                 }
-                is UserInfoState.Success -> {
+                is UserInfoUiState.Success -> {
                     binding.indicatorInfo.isVisible = false
                     binding.scrollViewInfo.isVisible = true
+                    binding.tvNoInternetInfo.isVisible = false
                     binding.btnInfo.text = getString(R.string.save_changes)
 
                     ImageLoader.load(binding.ivPhotoInfo, it.user.photoUrl)
@@ -61,14 +70,24 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                     binding.inputEditTextPhone.setText(it.user.phone)
                     binding.inputEditTextEmail.setText(it.user.email)
                 }
-                is UserInfoState.AddUser -> {
+                is UserInfoUiState.AddUser -> {
                     binding.indicatorInfo.isVisible = false
                     binding.scrollViewInfo.isVisible = true
+                    binding.tvNoInternetInfo.isVisible = false
                     binding.btnInfo.text = getString(R.string.add_user)
                     binding.bottomBarInfo.setMenuItemVisibility(R.id.action_delete, false)
                 }
-                is UserInfoState.Error -> {
+                is UserInfoUiState.NoInternet -> {
+                    binding.btnInfo.isVisible = false
                     binding.indicatorInfo.isVisible = false
+                    binding.tvNoInternetInfo.isVisible = true
+                    binding.bottomBarInfo.setMenuItemVisibility(R.id.action_delete, false)
+                }
+                is UserInfoUiState.Error -> {
+                    binding.indicatorInfo.isVisible = false
+                    binding.tvNoInternetInfo.isVisible = false
+
+                    showErrorMessageSnackbar(R.string.loading_error)
                 }
             }
         }
@@ -76,39 +95,52 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
 
     private fun setupViewsListeners() {
         binding.btnInfo.setDebounceClickListener {
-            checkEmptyEditTextFields()
+            val user = getUpdatedUser()
+
+            if (user != null) {
+                if (NetworkUtil.hasConnected(requireContext())) {
+                    if (args.id == NEW_USER_ID) {
+                        // viewModel.addUser(user)
+                    } else {
+                        // viewModel.updateUser(user.id, user)
+                    }
+                    findNavController().popBackStack()
+                } else {
+                    viewModel.notifyNoInternet()
+                }
+            } else {
+                showErrorMessageSnackbar(R.string.fill_all_fields_error)
+            }
         }
         binding.bottomBarInfo.setDebounceMenuItemClickListener(R.id.action_delete) {
-            deleteUser()
-            findNavController().popBackStack()
+            if (NetworkUtil.hasConnected(requireContext())) {
+                // val user = viewModel.userFlow.value
+                // viewModel.deleteUser(user.id)
+                findNavController().popBackStack()
+            } else {
+                viewModel.notifyNoInternet()
+            }
         }
         binding.bottomBarInfo.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
 
-    // TODO BAD
-    private fun checkEmptyEditTextFields() {
-        val lastName = binding.inputEditTextLastName.editableText.toString()
-        val firstName = binding.inputEditTextFirstName.editableText.toString()
-        val middleName = binding.inputEditTextMiddleName.editableText.toString()
-        val birthDate = binding.inputEditTextBirthDate.editableText.toString()
-        val phone = binding.inputEditTextPhone.editableText.toString()
-        val email = binding.inputEditTextEmail.editableText.toString()
+    private fun getUpdatedUser(): UserModel? {
+        val lastName = binding.inputEditTextLastName.getCheckedText()
+        val firstName = binding.inputEditTextFirstName.getCheckedText()
+        val middleName = binding.inputEditTextMiddleName.getCheckedText()
+        val birthDate = binding.inputEditTextBirthDate.getCheckedText()
+        val phone = binding.inputEditTextPhone.getCheckedText()
+        val email = binding.inputEditTextEmail.getCheckedText()
 
-        if (lastName.isEmpty()) binding.inputEditTextLastName.error = getString(R.string.enter_data_error)
-        if (firstName.isEmpty()) binding.inputEditTextFirstName.error = getString(R.string.enter_data_error)
-        if (middleName.isEmpty()) binding.inputEditTextMiddleName.error = getString(R.string.enter_data_error)
-        if (birthDate.isEmpty()) binding.inputEditTextBirthDate.error = getString(R.string.enter_data_error)
-        if (phone.isEmpty()) binding.inputEditTextPhone.error = getString(R.string.enter_data_error)
-        if (email.isEmpty()) binding.inputEditTextEmail.error = getString(R.string.enter_data_error)
-
-        if (lastName.isNotEmpty() &&
-            firstName.isNotEmpty() &&
-            middleName.isNotEmpty() &&
-            birthDate.isNotEmpty() &&
-            phone.isNotEmpty() &&
-            email.isNotEmpty()
+        return if (
+            lastName != null &&
+            firstName != null &&
+            middleName != null &&
+            birthDate != null &&
+            phone != null &&
+            email != null
         ) {
             val user = viewModel.userFlow.value
 
@@ -119,19 +151,26 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
             user.phone = phone
             user.email = email
 
-            if (args.id == NEW_USER_ID) {
-                //viewModel.addUser(user)
-            } else {
-                //viewModel.updateUser(user)
-            }
-
-            findNavController().popBackStack()
+            user
+        } else {
+            null
         }
     }
 
-    private fun deleteUser() {
-        val user = viewModel.userFlow.value
-        //viewModel.deleteUser(user)
+    private fun TextInputEditText.getCheckedText(): String? {
+        return editableText.toString().ifEmpty {
+            error = getString(R.string.enter_data_error)
+            null
+        }
+    }
+
+    private fun showErrorMessageSnackbar(messageId: Int) {
+        BaseSnackbar().create {
+            make(binding.root, getString(messageId))
+            setBackgroundTintList(requireContext().getColor(R.color.error_color))
+            setTopGravity()
+            enableHideByClickSnackbar()
+        }.show()
     }
 
     override fun onPause() {

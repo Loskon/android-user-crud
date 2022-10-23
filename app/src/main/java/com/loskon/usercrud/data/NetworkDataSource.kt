@@ -32,4 +32,16 @@ class NetworkDataSource(
             }
         }
     }
+
+    suspend fun addUser(user: UserDto) {
+        userApi.addUser(user)
+    }
+
+    suspend fun updateUser(id: Int, user: UserDto) {
+        userApi.updateUser(id, user)
+    }
+
+    suspend fun deleteUser(id: Int) {
+        userApi.deleteUser(id)
+    }
 }
