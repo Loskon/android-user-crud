@@ -12,7 +12,7 @@ import timber.log.Timber
 
 class UserListViewModel(
     private val userListInteractor: UserListInteractor
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val userListMutableFlow = MutableStateFlow<UserListUiState>(UserListUiState.Loading)
     val userListFlow get() = userListMutableFlow.asStateFlow()

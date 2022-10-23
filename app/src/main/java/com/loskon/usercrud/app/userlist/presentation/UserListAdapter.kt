@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.loskon.usercrud.base.extension.view.setDebounceClickListener
 import com.loskon.usercrud.base.viewbinding.viewBinding
-import com.loskon.usercrud.databinding.ItemUserBinding
+import com.loskon.usercrud.databinding.ItemUserCardBinding
 import com.loskon.usercrud.domain.UserModel
 import com.loskon.usercrud.util.ImageLoader
 
@@ -19,7 +19,7 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
     override fun getItemCount(): Int = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
-        return UserListViewHolder(parent.viewBinding(ItemUserBinding::inflate))
+        return UserListViewHolder(parent.viewBinding(ItemUserCardBinding::inflate))
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
@@ -27,10 +27,10 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
 
         with(holder.binding) {
             user.apply {
-                ImageLoader.load(ivPhotoCard, photoUrl)
-                tvFullnameCard.text = fullName
-                tvPhoneCard.text = phone
-                tvEmailCard.text = email
+                ImageLoader.load(ivPhotoUserCard, photoUrl)
+                tvFullnameUserCard.text = fullName
+                tvPhoneUserCard.text = phone
+                tvEmailUserCard.text = email
                 root.setDebounceClickListener { onItemClick?.invoke(this) }
             }
         }
@@ -45,5 +45,5 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
         this.onItemClick = onItemClick
     }
 
-    class UserListViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
+    class UserListViewHolder(val binding: ItemUserCardBinding) : RecyclerView.ViewHolder(binding.root)
 }

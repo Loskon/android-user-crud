@@ -54,15 +54,15 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
         viewModel.userInfoFlow.observe(viewLifecycleOwner) {
             when (it) {
                 is UserInfoUiState.Loading -> {
-                    binding.indicatorInfo.isVisible = true
+                    binding.indicatorUserInfo.isVisible = true
                 }
                 is UserInfoUiState.Success -> {
-                    binding.indicatorInfo.isVisible = false
-                    binding.scrollViewInfo.isVisible = true
-                    binding.tvNoInternetInfo.isVisible = false
-                    binding.btnInfo.text = getString(R.string.save_changes)
+                    binding.indicatorUserInfo.isVisible = false
+                    binding.scrollViewUserInfo.isVisible = true
+                    binding.tvNoInternetUserInfo.isVisible = false
+                    binding.btnUserInfo.text = getString(R.string.save_changes)
 
-                    ImageLoader.load(binding.ivPhotoInfo, it.user.photoUrl)
+                    ImageLoader.load(binding.ivPhotoUserInfo, it.user.photoUrl)
                     binding.inputEditTextLastName.setText(it.user.lastName)
                     binding.inputEditTextFirstName.setText(it.user.firstName)
                     binding.inputEditTextMiddleName.setText(it.user.middleName)
@@ -71,21 +71,21 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                     binding.inputEditTextEmail.setText(it.user.email)
                 }
                 is UserInfoUiState.AddUser -> {
-                    binding.indicatorInfo.isVisible = false
-                    binding.scrollViewInfo.isVisible = true
-                    binding.tvNoInternetInfo.isVisible = false
-                    binding.btnInfo.text = getString(R.string.add_user)
-                    binding.bottomBarInfo.setMenuItemVisibility(R.id.action_delete, false)
+                    binding.indicatorUserInfo.isVisible = false
+                    binding.scrollViewUserInfo.isVisible = true
+                    binding.tvNoInternetUserInfo.isVisible = false
+                    binding.btnUserInfo.text = getString(R.string.add_user)
+                    binding.bottomBarUserInfo.setMenuItemVisibility(R.id.action_delete, false)
                 }
                 is UserInfoUiState.NoInternet -> {
-                    binding.btnInfo.isVisible = false
-                    binding.indicatorInfo.isVisible = false
-                    binding.tvNoInternetInfo.isVisible = true
-                    binding.bottomBarInfo.setMenuItemVisibility(R.id.action_delete, false)
+                    binding.btnUserInfo.isVisible = false
+                    binding.indicatorUserInfo.isVisible = false
+                    binding.tvNoInternetUserInfo.isVisible = true
+                    binding.bottomBarUserInfo.setMenuItemVisibility(R.id.action_delete, false)
                 }
                 is UserInfoUiState.Error -> {
-                    binding.indicatorInfo.isVisible = false
-                    binding.tvNoInternetInfo.isVisible = false
+                    binding.indicatorUserInfo.isVisible = false
+                    binding.tvNoInternetUserInfo.isVisible = false
 
                     showErrorMessageSnackbar(R.string.loading_error)
                 }
@@ -94,7 +94,7 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
     }
 
     private fun setupViewsListeners() {
-        binding.btnInfo.setDebounceClickListener {
+        binding.btnUserInfo.setDebounceClickListener {
             val user = getUpdatedUser()
 
             if (user != null) {
@@ -112,7 +112,7 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                 showErrorMessageSnackbar(R.string.fill_all_fields_error)
             }
         }
-        binding.bottomBarInfo.setDebounceMenuItemClickListener(R.id.action_delete) {
+        binding.bottomBarUserInfo.setDebounceMenuItemClickListener(R.id.action_delete) {
             if (NetworkUtil.hasConnected(requireContext())) {
                 // val user = viewModel.userFlow.value
                 // viewModel.deleteUser(user.id)
@@ -121,11 +121,12 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                 viewModel.notifyNoInternet()
             }
         }
-        binding.bottomBarInfo.setNavigationOnClickListener {
+        binding.bottomBarUserInfo.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
 
+    @Suppress("ComplexCondition")
     private fun getUpdatedUser(): UserModel? {
         val lastName = binding.inputEditTextLastName.getCheckedText()
         val firstName = binding.inputEditTextFirstName.getCheckedText()
@@ -161,7 +162,7 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
         return editableText.toString().ifEmpty {
             error = getString(R.string.enter_data_error)
             null
-        }
+        }?.trim()
     }
 
     private fun showErrorMessageSnackbar(messageId: Int) {

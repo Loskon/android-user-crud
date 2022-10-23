@@ -11,9 +11,9 @@ import retrofit2.http.Path
 
 interface UserApi {
 
-    @GET("JWvp7c") suspend fun getFakeUsers(): Response<List<UserDto>>
+    @GET("-xkvg1") suspend fun getFakeUsers(): Response<List<UserDto>>
 
-    @GET("wM3aK2") suspend fun getFakeUser(): Response<UserDto>
+    @GET("HgZgJ7") suspend fun getFakeUser(): Response<UserDto>
 
     @GET("users") suspend fun getUsers(): Response<List<UserDto>>
 

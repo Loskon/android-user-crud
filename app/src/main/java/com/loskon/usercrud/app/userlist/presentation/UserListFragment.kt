@@ -45,7 +45,7 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     }
 
     private fun configureRecyclerView() {
-        with(binding.recyclerVIew) {
+        with(binding.recyclerView) {
             (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(requireContext())
             adapter = userListAdapter
@@ -57,21 +57,21 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
         viewModel.userListFlow.observe(viewLifecycleOwner) {
             when (it) {
                 is UserListUiState.Loading -> {
-                    binding.indicator.isVisible = true
+                    binding.indicatorUserList.isVisible = true
                 }
                 is UserListUiState.Success -> {
-                    binding.indicator.isVisible = false
-                    binding.tvNoInternetList.isVisible = false
+                    binding.indicatorUserList.isVisible = false
+                    binding.tvNoInternetUserList.isVisible = false
 
                     userListAdapter.setItems(it.users)
                 }
                 is UserListUiState.NoInternet -> {
-                    binding.indicator.isVisible = false
-                    binding.tvNoInternetList.isVisible = true
+                    binding.indicatorUserList.isVisible = false
+                    binding.tvNoInternetUserList.isVisible = true
                 }
                 is UserListUiState.Failure -> {
-                    binding.tvNoInternetList.isVisible = false
-                    binding.indicator.isVisible = false
+                    binding.indicatorUserList.isVisible = false
+                    binding.tvNoInternetUserList.isVisible = false
 
                     showErrorMessageSnackbar(R.string.loading_error)
                 }
@@ -102,11 +102,11 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
             val action = UserListFragmentDirections.actionOpenUserInfoFragment(1)
             findNavController().navigate(action)
         }
-        binding.button.setDebounceClickListener {
+        binding.btnUserList.setDebounceClickListener {
             val action = UserListFragmentDirections.actionOpenUserInfoFragment(0)
             findNavController().navigate(action)
         }
-        binding.bottomBar.setNavigationOnClickListener {
+        binding.bottomBarUserList.setNavigationOnClickListener {
             AppPreference.setUserAuthenticated(requireContext(), authenticated = false)
             findNavController().navigate(R.id.actionOpenLoginFragment)
         }

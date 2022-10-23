@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">User Crud</string>
+    <string name="app_name">Телрос</string>
     <string name="telros">Телрос</string>
     <string name="login_hint">Login</string>
     <string name="password_hint">Password</string>
