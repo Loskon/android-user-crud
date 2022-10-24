@@ -59,8 +59,10 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                 is UserInfoUiState.Success -> {
                     binding.indicatorUserInfo.isVisible = false
                     binding.scrollViewUserInfo.isVisible = true
+                    binding.btnUserInfo.isVisible = true
                     binding.tvNoInternetUserInfo.isVisible = false
                     binding.btnUserInfo.text = getString(R.string.save_changes)
+                    binding.bottomBarUserInfo.setMenuItemVisibility(R.id.action_delete, true)
 
                     ImageLoader.load(binding.ivPhotoUserInfo, it.user.photoUrl)
                     binding.inputEditTextLastName.setText(it.user.lastName)
@@ -73,13 +75,14 @@ class UserInfoFragment : Fragment(R.layout.fragment_user_info) {
                 is UserInfoUiState.AddUser -> {
                     binding.indicatorUserInfo.isVisible = false
                     binding.scrollViewUserInfo.isVisible = true
+                    binding.btnUserInfo.isVisible = true
                     binding.tvNoInternetUserInfo.isVisible = false
                     binding.btnUserInfo.text = getString(R.string.add_user)
                     binding.bottomBarUserInfo.setMenuItemVisibility(R.id.action_delete, false)
                 }
                 is UserInfoUiState.NoInternet -> {
-                    binding.btnUserInfo.isVisible = false
                     binding.indicatorUserInfo.isVisible = false
+                    binding.btnUserInfo.isVisible = false
                     binding.tvNoInternetUserInfo.isVisible = true
                     binding.bottomBarUserInfo.setMenuItemVisibility(R.id.action_delete, false)
                 }

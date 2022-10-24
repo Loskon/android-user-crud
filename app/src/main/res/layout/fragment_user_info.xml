@@ -186,10 +186,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bottom_bar_user_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Сохранить" />
+        tools:text="Сохранить"
+        tools:visibility="visible" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar_user_info"

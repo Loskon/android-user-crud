@@ -5,7 +5,7 @@ import androidx.preference.PreferenceManager
 
 object AppPreference {
 
-    private const val PREF_KEY_LOGIN = "PREF_KEY_LOGIN"
+    private const val PREF_KEY_AUTHENTICATED = "PREF_KEY_AUTHENTICATED"
 
     fun set(context: Context, key: String, value: Boolean) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -17,10 +17,10 @@ object AppPreference {
     }
 
     fun setUserAuthenticated(context: Context, authenticated: Boolean) {
-        set(context, PREF_KEY_LOGIN, authenticated)
+        set(context, PREF_KEY_AUTHENTICATED, authenticated)
     }
 
     fun isUserAuthenticated(context: Context): Boolean {
-        return get(context, PREF_KEY_LOGIN)
+        return get(context, PREF_KEY_AUTHENTICATED)
     }
 }
